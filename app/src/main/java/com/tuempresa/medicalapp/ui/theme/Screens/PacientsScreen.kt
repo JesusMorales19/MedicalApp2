@@ -5,9 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -22,6 +19,11 @@ import com.tuempresa.medicalapp.R
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import com.tuempresa.medicalapp.ui.theme.Navegacion.BottomNavigationBar
+import com.tuempresa.medicalapp.ui.theme.Navegacion.PantallaActual
+import androidx.compose.foundation.layout.navigationBarsPadding
 
 data class Paciente(
     val nombre: String,
@@ -30,73 +32,82 @@ data class Paciente(
     val foto: Int // resource id
 )
 
+
+// Modifica PacientesScreen para aceptar un Modifier
 @Composable
-fun PacientesScreen(onPacienteClick: (String) -> Unit = {}) {
+fun PacientesScreen(
+    modifier: Modifier = Modifier,
+    onPacienteClick: (String) -> Unit = {}
+) {
     val pacientes = listOf(
         Paciente("Ricardo Israel", "Sep 05, 2021", "Diagnóstico", R.drawable.ic_persona),
-        Paciente("Ricardo Israel", "Sep 05, 2021", "Diagnóstico", R.drawable.ic_persona),
-        Paciente("Ricardo Israel", "Sep 05, 2021", "Diagnóstico", R.drawable.ic_persona)
+        Paciente("Maria Morales", "Sep 05, 2022", "Diagnóstico", R.drawable.ic_persona),
+        Paciente("Cesar Montes", "Sep 05, 2023", "Diagnóstico", R.drawable.ic_persona),
+        Paciente("Josefa Perez", "Sep 05, 2024", "Diagnóstico", R.drawable.ic_persona),
+        Paciente("Cristina Gonzales", "Sep 05, 2025", "Diagnóstico", R.drawable.ic_persona),
     )
     var search by remember { mutableStateOf("") }
-    val blue = Color(0xFF183A6D)
+    var blue = Color(0xFF183A6D)
     val lightGray = Color(0xFFF5F7FA)
 
-    Scaffold(
-        bottomBar = {
-            BottomNavigationBar()
-        },
-        containerColor = lightGray
-    ) { padding ->
-        Column(
+    // Filtrar pacientes por nombre o fecha de registro
+    val pacientesFiltrados = pacientes.filter {
+        it.nombre.contains(search, ignoreCase = true) ||
+        it.fechaRegistro.contains(search, ignoreCase = true)
+    }
+
+    Column(
+        modifier = modifier
+            .background(lightGray)
+            .padding(horizontal = 16.dp)
+            .fillMaxSize()
+    ) {
+        Spacer(modifier = Modifier.height(12.dp))
+        // Barra de búsqueda
+        OutlinedTextField(
+            value = search,
+            onValueChange = { search = it },
+            placeholder = { Text("Buscar...", color = Color(0xFFA4C8DF), fontSize = 18.sp) },
+            leadingIcon = {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_search),
+                    contentDescription = "Buscar",
+                    tint = Color(0xFFA4C8DF)
+                )
+            },
+            shape = RoundedCornerShape(50),
+            colors = OutlinedTextFieldDefaults.colors(
+                unfocusedBorderColor = Color(0xFFE0E0E0),
+                focusedBorderColor = blue,
+                unfocusedContainerColor = Color.White,
+                focusedContainerColor = Color.White
+            ),
+            textStyle = LocalTextStyle.current.copy(fontSize = 18.sp),
             modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .padding(horizontal = 16.dp)
+                .fillMaxWidth()
+                .height(60.dp)
+        )
+        Spacer(modifier = Modifier.height(26.dp))
+        // Título
+        Text(
+            "Mis Pacientes",
+            fontWeight = FontWeight.Bold,
+            fontSize = 26.sp,
+            color = blue,
+            modifier = Modifier
+                .padding(bottom = 12.dp)
+                .align (Alignment.CenterHorizontally)
+        )
+        // Lista de pacientes filtrada
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+            modifier = Modifier.weight(1f)
         ) {
-            Spacer(modifier = Modifier.height(12.dp))
-            // Barra de búsqueda
-            OutlinedTextField(
-                value = search,
-                onValueChange = { search = it },
-                placeholder = { Text("Buscar...", color = Color(0xFFA4C8DF), fontSize = 18.sp) },
-                leadingIcon = {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_search),
-                        contentDescription = "Buscar",
-                        tint = Color(0xFFA4C8DF)
-                    )
-                },
-                shape = RoundedCornerShape(50),
-                colors = OutlinedTextFieldDefaults.colors(
-                    unfocusedBorderColor = Color(0xFFE0E0E0),
-                    focusedBorderColor = blue,
-                    unfocusedContainerColor = Color.White,
-                    focusedContainerColor = Color.White
-                ),
-                textStyle = LocalTextStyle.current.copy(fontSize = 18.sp),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(60.dp)
-            )
-            Spacer(modifier = Modifier.height(26.dp))
-            // Título
-            Text(
-                "Mis Pacientes",
-                fontWeight = FontWeight.Bold,
-                fontSize = 24.sp,
-                color = blue,
-                modifier = Modifier.padding(bottom = 12.dp)
-            )
-            // Lista de pacientes
-            Column(
-                verticalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                pacientes.forEach { paciente ->
-                    PacienteCard(
-                        paciente = paciente, 
-                        onDiagnosticoClick = { onPacienteClick(paciente.nombre) }
-                    )
-                }
+            items(pacientesFiltrados) { paciente ->
+                PacienteCard(
+                    paciente = paciente,
+                    onDiagnosticoClick = { onPacienteClick(paciente.nombre) }
+                )
             }
         }
     }
@@ -137,10 +148,10 @@ fun PacienteCard(
                     )
                 }
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_search),
-                    contentDescription = "Ver paciente",
+                    painter = painterResource(id = R.drawable.ic_edit_pacient),
+                    contentDescription = "Editar Paciente",
                     tint = blue,
-                    modifier = Modifier.size(24.dp)
+                    modifier = Modifier.size(33.dp)
                 )
             }
             Spacer(modifier = Modifier.height(8.dp))
@@ -195,37 +206,5 @@ fun PacienteCard(
                 )
             }
         }
-    }
-}
-
-@Composable
-fun BottomNavigationBar() {
-    val blue = Color(0xFF183A6D)
-    NavigationBar(
-        containerColor = Color(0xFFF5F7FA),
-        tonalElevation = 0.dp
-    ) {
-        NavigationBarItem(
-            selected = true,
-            onClick = { /* Acción */ },
-            icon = {
-                Icon(
-                    imageVector = Icons.Default.Person,
-                    contentDescription = "Pacientes",
-                    tint = blue
-                )
-            }
-        )
-        NavigationBarItem(
-            selected = false,
-            onClick = { /* Acción */ },
-            icon = {
-                Icon(
-                    imageVector = Icons.Default.Settings,
-                    contentDescription = "Configuración",
-                    tint = blue
-                )
-            }
-        )
     }
 }
