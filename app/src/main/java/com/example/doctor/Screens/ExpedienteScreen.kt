@@ -142,4 +142,27 @@ fun ExpedienteScreen(navController: NavController) {
             }
         }
     }
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+        // Contenido principal del expediente (todo lo que ya tienes)
+        Column {
+            // TODO: aquí va tu contenido actual
+        }
+
+        // Botón en la esquina inferior derecha
+        Button(
+            onClick = { navController.navigate("detallecirugia") },
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(8.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF81D4FA))
+        ) {
+            Icon(Icons.Default.MedicalServices, contentDescription = "Detalle cirugía", tint = Color.White)
+            Spacer(modifier = Modifier.width(8.dp))
+            Text("Ver Detalles de Cirugía", color = Color.White)
+        }
+    }
 }

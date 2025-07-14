@@ -112,11 +112,12 @@ fun HomeScreen(navController: NavController) {
                     ) { navController.navigate(Screen.Pacientes.name) }
 
                     HomeOptionCard(
-                        title = "Expediente",
-                        icon = Icons.Default.Folder,
-                        background = Color(0xFFA5D6A7),
+                        title = "Pendientes",
+                        icon = Icons.Default.CheckCircle,
+                        background = Color(0xFFFFF59D), // amarillo claro
                         modifier = Modifier.weight(1f)
-                    ) { navController.navigate(Screen.Expediente.name) }
+                    ) { navController.navigate(Screen.Pendientes.name) }
+
 
                     HomeOptionCard(
                         title = "Cirugía",

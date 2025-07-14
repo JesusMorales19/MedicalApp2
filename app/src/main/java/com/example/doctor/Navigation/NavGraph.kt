@@ -12,7 +12,8 @@ enum class Screen {
     Cirugia,
     SignosVitales,
     Pacientes,
-    DetalleCirugia  // Nueva pantalla
+    DetalleCirugia,  // Nueva pantalla
+    Pendientes
 }
 
 @Composable
@@ -34,6 +35,9 @@ fun NavGraph(navController: NavHostController) {
         }
         composable(Screen.DetalleCirugia.name) {  // Navegación a DetalleCirugiaScreen
             DetalleCirugiaScreen(navController)
+        }
+        composable(Screen.Pendientes.name) {
+            PendientesScreen(navController)
         }
     }
 }
