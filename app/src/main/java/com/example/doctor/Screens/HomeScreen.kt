@@ -120,11 +120,12 @@ fun HomeScreen(navController: NavController) {
 
 
                     HomeOptionCard(
-                        title = "Cirugía",
-                        icon = Icons.Default.LocalHospital,
-                        background = Color(0xFFCE93D8),
+                        title = "Signos Vitales",
+                        icon = Icons.Default.Favorite,
+                        background = Color(0xFFA5D6A7), // verde pastel
                         modifier = Modifier.weight(1f)
-                    ) { navController.navigate(Screen.Cirugia.name) }
+                    ) { navController.navigate(Screen.SignosVitales.name) }
+
                 }
             }
         }

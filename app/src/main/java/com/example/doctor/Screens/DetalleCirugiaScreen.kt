@@ -1,6 +1,6 @@
 package com.example.doctor.screens
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -8,10 +8,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.doctor.R
 
 @Composable
 fun DetalleCirugiaScreen(navController: NavController) {
@@ -28,21 +31,30 @@ fun DetalleCirugiaScreen(navController: NavController) {
         )
 
         Row(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(24.dp)
         ) {
-            // Columna izquierda: Imagen (simulada con Box gris)
-            Box(
+            // Imagen médica (izquierda)
+            Card(
                 modifier = Modifier
                     .weight(1f)
-                    .fillMaxHeight()
-                    .background(Color.LightGray, shape = RoundedCornerShape(16.dp)),
-                contentAlignment = Alignment.Center
+                    .fillMaxHeight(),
+                shape = RoundedCornerShape(16.dp),
+                elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
             ) {
-                Text("Aquí irá la imagen", color = Color.DarkGray)
+                Image(
+                    painter = painterResource(id = R.drawable.img),
+                    contentDescription = "Radiografía médica",
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(8.dp),
+                    contentScale = ContentScale.Crop
+                )
             }
 
-            // Columna derecha: Información
+            // Información (derecha)
             Card(
                 modifier = Modifier
                     .weight(1f)
@@ -75,7 +87,29 @@ fun DetalleCirugiaScreen(navController: NavController) {
                         text = "La imagen radiográfica muestra reducción de inflamación postoperatoria, alineación adecuada de la articulación y ausencia de cuerpos extraños.",
                         fontSize = 14.sp
                     )
+
+                    Text(
+                        text = "Fecha de procedimiento: 02/06/2025",
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Medium,
+                        color = Color.Gray
+                    )
                 }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        // Botón "Ver más"
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.End
+        ) {
+            Button(
+                onClick = { /* TODO: Navegar a otra pantalla o mostrar más detalles */ },
+                shape = RoundedCornerShape(12.dp)
+            ) {
+                Text("Ver más")
             }
         }
     }
