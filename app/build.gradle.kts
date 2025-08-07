@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("com.google.gms.google-services") version "4.3.14"
+    id("kotlin-parcelize") // Habilita @Parcelize
 }
 
 android {
@@ -57,4 +59,16 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation(platform("com.google.firebase:firebase-bom:33.16.0"))
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-firestore")
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-storage")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
+    implementation("androidx.compose.material:material-icons-extended")
+    implementation ("androidx.compose.material3:material3:1.1.2")
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("org.java-websocket:Java-WebSocket:1.5.3")
+    implementation("androidx.localbroadcastmanager:localbroadcastmanager:1.1.0")
 }
