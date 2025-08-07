@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test WebSocket Connection</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .status { padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .connected { background-color: #d4edda; color: #155724; }
+        .disconnected { background-color: #f8d7da; color: #721c24; }
+        .message { background-color: #d1ecf1; color: #0c5460; padding: 10px; margin: 5px 0; border-radius: 5px; }
+        input, button { padding: 10px; margin: 5px; }
+        #messages { height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Test WebSocket Connection</h1>
+    
+    <div>
+        <label for="ip">IP Address:</label>
+        <input type="text" id="ip" value="192.168.1.70" placeholder="Enter IP address">
+        
+                <label for="port">Port:</label>
+                        <input type="number" id="port" value="8083" placeholder="Enter port">
+        <select id="portPreset" onchange="setPort()">
+                            <option value="8083" selected>Puerto 8083</option>
+            <option value="8081">Puerto 8081</option>
+            <option value="8082">Puerto 8082</option>
+            <option value="8083">Puerto 8083</option>
+            <option value="9000">Puerto 9000</option>
+            <option value="9001">Puerto 9001</option>
+        </select>
+        
+        <button onclick="connect()">Connect</button>
+        <button onclick="disconnect()">Disconnect</button>
+    </div>
+    
+    <div id="status" class="status disconnected">Disconnected</div>
+    
+    <div>
+        <h3>Messages:</h3>
+        <div id="messages"></div>
+    </div>
+    
+    <script>
+        let ws = null;
+        
+        function connect() {
+            const ip = document.getElementById('ip').value;
+            const port = document.getElementById('port').value;
+            const url = `ws://${ip}:${port}`;
+            
+            try {
+                ws = new WebSocket(url);
+                
+                ws.onopen = function(event) {
+                    document.getElementById('status').textContent = 'Connected to ' + url;
+                    document.getElementById('status').className = 'status connected';
+                    addMessage('Connected to WebSocket server');
+                };
+                
+                ws.onmessage = function(event) {
+                    addMessage('Received: ' + event.data);
+                    try {
+                        const json = JSON.parse(event.data);
+                        addMessage('Parsed JSON: ' + JSON.stringify(json, null, 2));
+                    } catch (e) {
+                        addMessage('Raw message (not JSON): ' + event.data);
+                    }
+                };
+                
+                ws.onclose = function(event) {
+                    document.getElementById('status').textContent = 'Disconnected';
+                    document.getElementById('status').className = 'status disconnected';
+                    addMessage('Disconnected from WebSocket server');
+                };
+                
+                ws.onerror = function(error) {
+                    document.getElementById('status').textContent = 'Error: ' + error;
+                    document.getElementById('status').className = 'status disconnected';
+                    addMessage('WebSocket error: ' + error);
+                };
+                
+            } catch (error) {
+                addMessage('Connection error: ' + error);
+            }
+        }
+        
+        function disconnect() {
+            if (ws) {
+                ws.close();
+                ws = null;
+            }
+        }
+        
+        function addMessage(message) {
+            const messagesDiv = document.getElementById('messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message';
+            messageDiv.textContent = new Date().toLocaleTimeString() + ': ' + message;
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+        
+        function setPort() {
+            const portPreset = document.getElementById('portPreset');
+            const portInput = document.getElementById('port');
+            portInput.value = portPreset.value;
+        }
+        
+        // Auto-connect on page load
+        window.onload = function() {
+            setTimeout(connect, 1000);
+        };
+    </script>
+</body>
+</html> 

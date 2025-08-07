@@ -1,0 +1,62 @@
+{
+  "tipo": "consultaEspecifica",
+  "paciente": {
+    "id": "P001",
+    "nombre": "María",
+    "apellido": "González",
+    "foto": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k=",
+    "tipoSangre": "O+",
+    "sexo": "Femenino"
+  },
+  "doctor": {
+    "id": "D001",
+    "nombre": "Dr. Carlos",
+    "apellido": "Rodríguez",
+    "especialidad": "Cardiología",
+    "foto": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+  },
+  "consulta": {
+    "id": "C001",
+    "fecha": "2024-01-15",
+    "hora": "14:30",
+    "motivo": "Dolor en el pecho y falta de aire",
+    "duracionSintomas": "3 días",
+    "diagnosticoPrincipal": "Angina de pecho",
+    "diagnosticoSecundario": "Hipertensión arterial",
+    "enfermedadesCronicas": "Diabetes tipo 2, Hipertensión",
+    "alergias": "Penicilina",
+    "peso": "75 kg",
+    "altura": "165 cm",
+    "notas": "Paciente refiere dolor opresivo en el pecho que se irradia al brazo izquierdo",
+    "estudios": "Electrocardiograma, Análisis de sangre",
+    "indicaciones": "Reposo relativo, dieta baja en sal, control de presión arterial",
+    "requiereSeguimiento": true,
+    "fechaProxima": "2024-01-22",
+    "presionArterial": "140/90 mmHg",
+    "temperatura": "36.8°C",
+    "frecuenciaCardiaca": "85 lpm",
+    "sintomas": [
+      "Dolor en el pecho",
+      "Falta de aire",
+      "Sudoración excesiva",
+      "Náuseas"
+    ],
+    "medicamentos": [
+      {
+        "nombre": "Nitroglicerina",
+        "dosis": "0.4 mg",
+        "frecuencia": "Cada 5 minutos si persiste el dolor"
+      },
+      {
+        "nombre": "Aspirina",
+        "dosis": "100 mg",
+        "frecuencia": "Una vez al día"
+      },
+      {
+        "nombre": "Metoprolol",
+        "dosis": "50 mg",
+        "frecuencia": "Dos veces al día"
+      }
+    ]
+  }
+} 
